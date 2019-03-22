@@ -1,0 +1,289 @@
+"""
+   This is a app that generates clothing choices based on the input provided by the user.
+
+   There were some bugs that popped up during the coding of this program, these were when the user was asked to input
+   their choice of weather the value error would not be displayed instead the question would just be asked again.
+   Therefore i have removed the value error for the time being, while i work on fixing the problem.
+"""
+"""
+    __name__ = 'Skyosis'
+    __studentID's__ = 'u1854972, u1864674, u1772345, u1863805'
+    __Project__ = 'Weather Clothing Generator'
+    __date__ = '01/03/2019'
+"""
+import random
+import sys
+
+snow_male = ('\nHat: Winter Stock Mark Navy Merino Wool Hat'
+        '\nCoat: Hollister Co. Down-Blend Parka'
+        '\nJeans: Quiksilver After Surf Pant - Grey - ASOS Outlet'
+        '\nShoes: Fila Grunge - Wheat - Mens Boots\n', '\nHat: Result Black Thinsulate Sherpa Hat (L)'
+        '\nCoat: Ayacucho Mens Highland Winter Parka Black'
+        '\nJeans: Cotton Traders Men\'s Thermal Action Trousers in Black'
+        '\nShoes: UGG Freamon Waterproof Chukka Mens Shoes Grizzly 9\n', '\nHat: M&S Men\'s Black Pure Cotton Trapper Hat - XL Cotton'
+        '\nCoat: 11 Degrees Missile Heavy Bomber Jacket - Black Size: M'
+        '\nJeans: Regatta Men\'s Lined Delph Cargo Trousers Iron'
+        '\nShoes: Timberland Killington - Green - Mens Boots\n')
+snow_female = ('\nHat: Aldo Gliladda - Women\'s Hats & Scarves Winter - Pink/Purple'
+        '\nCoat: Golddigga Belted Bubble Jacket Ladies, Size 6, Black'
+        '\nJeans:Thermo Effect Bootcut Jeans by Arizona'
+        '\nShoes: Women\'s Breathable Air Cushion Leisure Shock Sneakers - 118743 ...\n', '\nHat: M&S Women\'s Grey Beanie Cable Hat'
+        '\nCoat: Quilted Winter Coat'
+        '\nJeans: Peter Storm Women\'s Water Resistant Leggings - Black'
+        '\nShoes: Womens Warm Snow Ankle Boots Army Combat Flat Grip Sole Fur Lined ...\n', '\nHat: Pro Climate Twisted Cable Knit Furry Pom Beanie Hat: Storm Grey'
+        '\nCoat: Bows Boutiques Larissa Grey Faux Fur Hooded Coat'
+        '\nJeans: Witt Fleece Lined Thermal Jeans'
+        '\nShoes: Heavenly Feet Mid Calf Boots EEE Fit\n')
+snow_unisex = ('\nHat: Beechfield Original Cuffed Beanie Heather ONE'
+        '\nCoat: Upcycled Unisex Shells Wool Jacket KIKS'
+        '\nJeans: Angels & Men Ladies Womens Girls Winter Thermal Jeans - Fleece ...'
+        '\nShoes: Unisex Winter Zip Up Eskimo Boots - Brown UK6', '\nHat: MUCO Mens Womens Hat Beanie Cap Unisex Winter Warm Knitted Hats ...'
+        '\nCoat: Heath House Preparatory School Unisex Winter Coat, Navy'
+        '\nSweatpants: Southbay Unisex Jogging Pant 27in'
+        '\nShoes: Desierto Fun L\' Lace-Up Boots by Puma\n', '\nHat: Beechfield Unisex Winter Urban Trapper Hat Black Cotton Trapper Hat'
+        '\nCoat: FDM Unisex Varsity / University Jacket (Contrast Sleeves) Heather ...'
+        '\nSweatpants: Anvil Unisex Lightweight Terry Jog Pants (Colour: Heather Grey ...'
+        '\nShoes: Puma Unisex Adults\' Desierto Fun L Hi-Top Trainers, Black 11 UK\n')
+
+sunny_male = ('\nHat: M&S Men\'s Black Bucket Hat with Stormwear - M Cotton'
+        '\nT-shirt: 11 Degrees Short Sleeve Koi Shirt - White Size: L'
+        '\nShorts: Jacamo Axel Sand Cargo Shorts'
+        '\nShoes: Jordan Eclipse - Men Shoes Black Size 42 at Foot Locker', '\nHat: M&S Men\'s Beige Foldable Panama Hat - L'
+        '\nT-shirt: shein Men Color Block Shirt,S'
+        '\nShorts: 883 Police - Mens Designer Seattle Sand Shorts'
+        '\nShoes: Allbirds Men\'s Merino Wool Runners, Grey, Size 8\n', '\nHat: M&S Men\'s Navy Pure Cotton Baseball Cap - Cotton'
+        '\nT-shirt: Jacamo S/S Navy Print Shirt Long'
+        '\nShorts: Newchic Mens Summer Breathable Cotton Linen Solid Color Knee ...'
+        '\nShoes: Allbirds Men\'s Tree Runners, Black, Size 12\n')
+sunny_female = ('\nHat: H&M Ladies - Straw Hat - Beige - Size: M/56'
+        '\nT-shirt: shein Rolled Sleeve Checked Knot Front Shirt,M'
+        '\nDresses: shein Floral Print Contrast Lace Cami Dress,M'
+        '\nShoes: Teva Womens Original Universal Sandal Miramar Fade Coral Sand Multi\n', '\nHat: Topshop Womens Monochrome Straw Hat - Monochrome'
+        '\nT-shirt: shein Eyelet Embroidered Scallop Hem Frilled Shell Top,S'
+        '\nDresses: shein Striped Cami Dress,M'
+        '\nShoes: Peacocks Womens Mustard Almond Toe Shoe\n', '\nHat: H&M Ladies - Straw Hat - Grey - Size: M/56'
+        '\nT-shirt: shein Flower Print Dip Hem Longline Trapeze Top,S'
+        '\nDresses: JustFashionNow Party Dresses Plus Size women Green Summer Dresses ...'
+        '\nShoes: Women\'s Giovanni Studded Espadrilles\n')
+sunny_unisex = ('\nHat: Yohope Fashion Unisex Hat Adjustable Size Baseball Cap Snapback ...'
+        '\nT-shirt: Cool Octopus Print Color Block Round Neck Unisex Summer Tee'
+        '\nShorts: bonprix Cotton Summer Shorts'
+        '\nShoes: Adidas EQT Support ADV Summer Shoes - Unisex - White - 5.5\n', '\nHat: Thenice Unisex Cotton Sun Cap Outdoor Bucket Mesh Boonie Hat (S01 ...'
+        '\nT-shirt: I Love Fancy Dress Unisex Hawaiian Print Shirt - Pink'
+        '\nShorts: ASOS Slim Chino Shorts In Light Grey'
+        '\nShoes: Scholl Jump, Shoes, Sandals & Slippers, Crocs, Black, Unisex, 36\n', '\nHat: Beechfield Unisex Linen Summer Gatsby Hat Grey'
+        '\nT-shirt: Redbubble Yeah Buoy Shirt - I Love Summer Unisex T-Shirt'
+        '\nShorts: Trespass Decypher Adults’ Unisex Breathable Padded Cycling Shorts'
+        '\nShoes: Croc Shoes Unisex Croc Retro Clog Slippers Summer Shoes Sandals ...\n')
+
+cloudy_male = ('\nHat: SikSilk x Dani Alves Bent Peak Trucker - Black'
+        '\nJackets: Brave Soul Parka Jacket With Faux Fur trim Hood - Black - ASOS Outlet'
+        '\nJeans: Nohow Tobago patched Jeans in Blue -'
+        '\nShoes: Allbirds Men\'s Merino Wool Runners, Grey, Size 13\n', '\nHat: ASOS DESIGN baseball cap in black'
+        '\nJackets: Brave Soul Mens Emmett Puffer Jacket Black , Size: S'
+        '\nJeans: Zaful Journal Print Zip Fly Jeans'
+        '\nShoes: Men\'s sneakers Outdoor Breathable Anti-Slip Casual Shoes for Men\n', '\nHat:ASOS DESIGN trucker cap in black'
+        '\nJackets: Nicce puffer jacket in black exclusive to ASOS'
+        '\nJeans: Jack and Jones Mens Luke Echo Anti Fit Jeans Blue Denim , Size: 30/32'
+        '\nShoes: Allbirds Men\'s Merino Wool Runners, Black, Size 8\n')
+cloudy_female = ('\nHat: M&S Women\'s Black Baker Boy Hat -'
+        '\nJackets: Topshop Womens Faux Fur Lined Quilted Puffer Jacket - Black'
+        '\nJeans: shein Ripped Bleach Wash Skinny Jeans,L'
+        '\nShoes: ModMiss women Winter Warm Boots lace-up Suede High-Low Heel Shoes\n', '\nHat: ASOS DESIGN turn up beanie in recycled polyester - Black'
+        '\nJackets: Topshop Womens Corduroy Puffer Jacket - Tobacco'
+        '\nJeans: shein Ripped Bleach Wash Skinny Jeans,XL'
+        '\nShoes: Puma Muse 2 Satin Strap - women Shoes Black Size 37.5 at Foot Locker\n', '\nHat: M&S Women\'s Navy Rain Bucket Hat - Medium-Large Cotton'
+        '\nJackets: Womens **White Hooded Jacket by Topshop Sno - White'
+        '\nJeans: Topshop Womens Authentic High Rise Jamie Skinny Jeans - Blue'
+        '\nShoes: Fila Disruptor II Women\'s - White - Trainers\n')
+cloudy_unisex = ('\nHat: Jordan Floppy Kids Adjustable - Unisex Caps Black Size YOUTH at ...'
+        '\nJackets: Uneek Premium Outdoor Jacket (Colour: Black Grey, Size: XL)'
+        '\nJeans: Howies Slim Fit Organic Denim - Indigo Colour: Indigo Blue, Size: W34'
+        '\nShoes: Kickers Unisex Kick Lo Youth Shoes, Black (BLACK/BLACK), 2 UK (34 EU)\n', '\nHat: Jordan Jumpman Snapback - Unisex Caps Grey Size Youth at Foot Locker'
+        '\nJackets: Southbay Unisex Windbreaker Jacket'
+        '\nJeans: Polarn O. Pyret Slim Fit Kids Jeans Black 11-12y Unisex'
+        '\nShoes: Puma Courtflex Inf, Unisex Kids\' low-top sneakers low-top Sneakers ...\n', '\nHat: Beechfield Trawler Beanie (Colour: Black, Size: ONE)'
+        '\nJackets: SOL\'S Unisex Shift Windbreaker Jacket (Colour: Black, Size: M)'
+        '\nJeans: Criminal Damage Unisex Indigo Stretch Jean 36'
+        '\nShoes: Adidas Unisex Adults\' AQ3325 Wrestling Shoes, (Black), 6 UK 39 1/3 EU\n')
+
+rain_male = ('\nHat: Cotton Traders Waterproof Waxed Hat in Blue'
+        '\nCoat: Nike Park 18 Senior Rain Jacket Black/White Medium,Nike'
+        '\nJeans: Rains Trousers'
+        '\nShoes: Hunter Men\'s Original Chelsea Boots Navy-UK 10\n', '\nHat: M&S Men\'s Black Bucket Hat with Stormwear - M Cotton'
+        '\nCoat: ASOS DESIGN shower resistant rain coat in navy'
+        '\nJeans: Levi\'s 512 Slim Taper Fit Jeans - Medium Indigo / Adriatic Adapt'
+        '\nShoes: Aigle Landfor, Mens Ankle Boot in Black (Shoe Size: 9)\n', '\nHat: Jaxon & James Oilcloth Rain Resistant Waterproof Flat Cap - Black'
+        '\nCoat: Snowdonia Waterproof Packaway Jacket, Men\'s, Size: l42/44, Black'
+        '\nJeans:Levi\'s 511 Slim Fit Jeans - Medium Indigo / Rajah ADV'
+        '\nShoes: Le Chameau Vierzonord XL Rubber Boots Mens Neoprene Lined . Green Gene\n')
+rain_female = ('\nHat: Cotton Traders Ladies Black Waxed Cotton Waterproof Hat'
+        '\nCoat: PrettyLittleThing Women\'s Petite Black Hooded Rain Coat - Size 6'
+        '\nLeggings: Peter Storm Women\'s Water Resistant Leggings - Black'
+        '\nShoes: Decathlon Solognac Glenarm Womens Warm Wellies Black\n', '\nHat: Barbour Waxed Ladies Sports Hat, Olive, Large'
+        '\nCoat: ASOS DESIGN Rain Jacket With Contrast Binding - Green'
+        '\nJeans: Brasher Women\'s Stretch Walking Trousers - Black'
+        '\nShoes: Urban Classics Gumboots - Rain Boot - for women - Black\n', '\nHat: House of Bruar Waterproof Storm Hat'
+        '\nCoat: ASOS DESIGN borg lined rainwear - Teal'
+        '\nJeans: Cotton Traders Waterproof Fleece Lined Trousers in Black'
+        '\nShoes: Graceland Ladies Ankle Wellington Chelsea Boots - Ladies - Size 37 ...\n')
+rain_unisex = ('\nHat: Kjus Unisex Grand Rain Hat, Accessories for Adults, Black, Size E'
+        '\nCoat: Stutterheim Raincoat Stockholm Navy'
+        '\nJeans: Tommy Hilfiger - Faded Star Print Jeans - Kids Unisex - Denim - 14yrs'
+        '\nShoes: Questorm Ltd Waterprof Rubber Wellies Unisex Wellington Boots 4 UK\n', '\nHat: Trespass Ando DLX Waterproof Rain Hat'
+        '\nCoat: Stutterheim Raincoat Stockholm Logo Opal Black'
+        '\nJeans: Go Soaky - Blue Denim Hidden Dragon Unisex Unlined Trousers ...'
+        '\nShoes: Dunlop Budget Welly, Unisex Adults Multisport Outdoor Shoes, BLACK ...\n', '\nHat: Walker & Hawkes Unisex Waterproof Navy Waxed Cotton Flat Cap - XL'
+        '\nCoat: Stutterheim Raincoat Stockholm Red'
+        '\nJeans: Line 8 Slim Taper Jeans - Black'
+        '\nShoes: Dunlop K580011 PVC KUITLAARS GROEN 43, Unisex Adults\' Unlined ...\n')
+
+
+def winter(weather):
+    if weather.lower().capitalize() == 'Rain':
+        return True
+    elif weather.lower().capitalize() == 'Sun':
+        return True
+    elif weather.lower().capitalize() == 'Cool':
+        return True
+    elif weather.lower().capitalize() == 'Snow':
+        return True
+
+
+def clothing_choice_10(weather, gender):
+     if gender.lower().capitalize() == 'M':
+        if weather.lower().capitalize() == 'Rain':
+            return random.choice(rain_male)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_male)
+        elif weather.lower().capitalize() == 'Snow':
+            return random.choice(snow_male)
+
+     elif gender.lower().capitalize() == 'F':
+         if weather.lower().capitalize() == 'Rain':
+             return random.choice(rain_female)
+         elif weather.lower().capitalize() == 'Cool':
+             return random.choice(cloudy_female)
+         elif weather.lower().capitalize() == 'Snow':
+             return random.choice(snow_female)
+
+     elif gender.lower().capitalize() == 'U':
+         if weather.lower().capitalize() == 'Rain':
+             return random.choice(rain_unisex)
+         elif weather.lower().capitalize() == 'Cool':
+             return random.choice(cloudy_unisex)
+         elif weather.lower().capitalize() == 'Snow':
+             return random.choice(snow_unisex)
+
+
+def clothing_choice_15(weather, gender):
+    if gender.lower().capitalize() == 'M':
+        if weather.lower().capitalize() == 'Rain':
+            return random.choice(rain_male)
+        elif weather.lower().capitalize() == 'Sun':
+            return random.choice(sunny_male)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_male)
+
+    elif gender.lower().capitalize() == 'F':
+        if weather.lower().capitalize() == 'Rain':
+            return random.choice(rain_female)
+        elif weather.lower().capitalize() == 'Sun':
+            return random.choice(sunny_female)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_female)
+
+    elif gender.lower().capitalize() == 'U':
+        if weather.lower().capitalize() == 'Rain':
+            return random.choice(rain_unisex)
+        elif weather.lower().capitalize() == 'Sun':
+            return random.choice(sunny_unisex)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_unisex)
+
+
+def clothing_choice_20(weather, gender):
+    if gender.lower().capitalize() == 'M':
+        if weather.lower().capitalize() == 'Sun':
+            return random.choice(sunny_male)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_male)
+
+    elif gender.lower().capitalize() == 'F':
+        if weather.lower().capitalize() == 'Sun':
+            return random.choice(sunny_female)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_female)
+
+    elif gender.lower().capitalize() == 'U':
+        if weather.lower().capitalize() == 'Sun':
+            return random.choice(sunny_unisex)
+        elif weather.lower().capitalize() == 'Cool':
+            return random.choice(cloudy_unisex)
+
+
+def checker_gender(gender):
+    if gender.lower().capitalize() == 'M':
+        return True
+    elif gender.lower().capitalize() == 'F':
+        return True
+    elif gender.lower().capitalize() == 'U':
+        return True
+
+
+def exiting(request):
+    if request.lower().capitalize() == 'Yes':
+        return True
+    else:
+        return False
+
+
+while True:
+    try:
+        gender = str(input('What is your gender: male "M", female "F" or unisex "U" ?\n'))
+        if checker_gender(gender):
+            try:
+                temp = int(input('What is the temperature? (In celsius)\n'))
+                if -5 <= temp <= 10:
+                    while True:
+                        try:
+                            weather = str(input('If it\'s raining type "Rain", snowing type "Snow" '
+                                                'or dry type "Cool"?\n'))
+                            if winter(weather):
+                                print (clothing_choice_10(weather, gender))
+                                break
+                        except ValueError:
+                            print('Value error. Please only enter a valid character.')
+                elif 10 < temp <= 20:
+                    while True:
+                        try:
+                            weather = str(input('If it\'s raining type "Rain", sunny type "Sun" or dry type "Cool"'
+                                                ' ?\n'))
+                            if winter(weather):
+                                print (clothing_choice_15(weather, gender))
+                                break
+                        except ValueError:
+                            print('Value error. Please only enter a valid character.')
+                elif 20 < temp <= 35:
+                    while True:
+                        try:
+                            weather = str(input('If it\'s sunny type "Sun" or dry type "Cool" ?\n'))
+                            if winter(weather):
+                                print (clothing_choice_20(weather, gender))
+                                break
+                        except ValueError:
+                            print('Value error. Please only enter a valid character.')
+                else:
+                    print("That is an unreasonable temperature 35 degrees celsius is the highest temp we go to,"
+                          " and -5 is the lowest.\n")
+                request = str(input('Would you like to exit?\n "yes" or "no"\n'))
+                if exiting(request):
+                    sys.exit()
+                else:
+                    print()
+            except ValueError:
+                print ('Value error. Please only enter a number.\n')
+        else:
+            print('Please select a gender.\n')
+    except ValueError:
+        print()
